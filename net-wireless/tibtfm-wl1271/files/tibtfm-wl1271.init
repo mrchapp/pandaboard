@@ -1,0 +1,26 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/net-wireless/bluez/files/4.60/bluetooth-init.d,v 1.2 2010/06/11 10:14:00 pacho Exp $
+
+depend() {
+	after coldplug
+	need dbus localmount
+}
+
+start() {
+   	ebegin "Initializing BT module of wl1271"
+
+	start-stop-daemon --start --verbose --background \
+	--name tibtfm-wl1271 --pidfile /var/run/tibtfm-wl1271.pid --make-pidfile \
+	--exec /usr/bin/uim -- /dev/ttyO1 3686400 1 22 
+
+	eend $?
+}
+
+stop() {
+	ebegin "Deinitializing BT module of wl1271"
+	start-stop-daemon --stop  \
+        --name tibtfm-wl1271 --pidfile /var/run/tibtfm-wl1271.pid
+	eend $?
+}
