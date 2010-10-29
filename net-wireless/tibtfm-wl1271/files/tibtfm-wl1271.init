@@ -11,7 +11,7 @@ depend() {
 start() {
    	ebegin "Initializing BT module of wl1271"
 
-	start-stop-daemon --start --verbose --background \
+	start-stop-daemon --start --oknodo --background \
 	--name tibtfm-wl1271 --pidfile /var/run/tibtfm-wl1271.pid --make-pidfile \
 	--exec /usr/bin/uim -- /dev/ttyO1 3686400 1 22 
 
