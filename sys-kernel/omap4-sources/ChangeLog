@@ -1,0 +1,10 @@
+# ChangeLog for sys-kernel/omap4-sources
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*omap4-sources-2.6.35.24.11_p3 (20 Nov 2010)
+
+  20 Nov 2010; Raúl Porcel <armin76@gentoo.org>
+  +omap4-sources-2.6.35.24.11_p3.ebuild:
+  Add initial version
+
