@@ -1,10 +1,10 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-wireless/zd1211-firmware/zd1211-firmware-1.4.ebuild,v 1.2 2007/11/03 12:03:19 dsd Exp $
 
 EAPI="2"
 
-inherit eutils
+inherit eutils linux-mod
 
 MY_P="${PN}_${PV}"
 
@@ -25,17 +25,30 @@ RDEPEND="net-wireless/tiwlan-wl1271-firmware"
 DEPEND="${RDEPEND}"
 
 
+pkg_setup() {
+    linux-mod_pkg_setup
+
+}
+
 src_prepare() {
 	cd ${WORKDIR}
 
 	epatch ${MY_P}*.diff
 	cd "${S}"
 	epatch "${S}"/debian/patches/*.patch
+
+	cd wlan
+	cp wlan/Makefile .
 }
 
 src_compile() {
-#	cd "${S}"
-	make -j1
+	cd wlan
+        # compile modules
+        emake -j1 KERNEL_HEADERS=${KV_DIR} || die
+
+        # compile utils
+        cd CUDK
+        emake -j1 || die
 }
 
 src_install() {
@@ -50,5 +63,8 @@ src_install() {
 	insinto /lib/firmware/tiwlan-wl1271
 	doins tiwlan.ini tiwlan_dual.ini
 
-	
+	cd "${S}"/wlan
+        insinto /lib/modules/${KV_FULL}/kernel/drivers/net/wireless/tiwlan-wl1271
+        doins sdio.ko tiwlan_drv.ko
+
 }

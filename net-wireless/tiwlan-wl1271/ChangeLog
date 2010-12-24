@@ -1,0 +1,8 @@
+# ChangeLog for net-wireless/tiwlan-wl1271
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  24 Dec 2010; Raúl Porcel <armin76@gentoo.org>
+  tiwlan-wl1271-0.24.9.ebuild:
+  Enhanced ebuild
+
