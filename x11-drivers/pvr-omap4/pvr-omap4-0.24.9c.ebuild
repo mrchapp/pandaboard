@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="arm"
 
 IUSE=""
-DEPEND=""
+DEPEND=">=x11-base/xorg-server-1.9"
 
 S="${WORKDIR}"
 RESTRICT="strip"
