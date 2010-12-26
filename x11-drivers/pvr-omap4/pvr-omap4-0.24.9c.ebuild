@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS="arm"
 
 IUSE=""
-DEPEND=">=x11-base/xorg-server-1.9"
+DEPEND=">=x11-base/xorg-server-1.9
+	=x11-drivers/pvr-omap4-kernel-0.24.9"
 
 S="${WORKDIR}"
 RESTRICT="strip"

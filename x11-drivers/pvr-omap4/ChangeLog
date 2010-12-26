@@ -2,6 +2,9 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Dec 2010; Raúl Porcel <armin76@gentoo.org> pvr-omap4-0.24.9c.ebuild:
+  Add dep on pvr-omap4-kernel
+
   25 Dec 2010; Raúl Porcel <armin76@gentoo.org> pvr-omap4-0.24.9c.ebuild:
   Add depend on xorg-server-1.9
 
