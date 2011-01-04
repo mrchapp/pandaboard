@@ -1,6 +1,9 @@
 # ChangeLog for x11-drivers/pvr-omap4
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  04 Jan 2011; Raúl Porcel <armin76@gentoo.org> pvr-omap4-0.24.9c.ebuild:
+  Fix DEPEND
 
   26 Dec 2010; Raúl Porcel <armin76@gentoo.org> pvr-omap4-0.24.9c.ebuild:
   Add dep on pvr-omap4-kernel

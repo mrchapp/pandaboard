@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-wireless/zd1211-firmware/zd1211-firmware-1.4.ebuild,v 1.2 2007/11/03 12:03:19 dsd Exp $
 
@@ -19,7 +19,9 @@ KEYWORDS="arm"
 
 IUSE=""
 DEPEND=">=x11-base/xorg-server-1.9
+	x11-libs/libdrm
 	=x11-drivers/pvr-omap4-kernel-0.24.9"
+RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"
 RESTRICT="strip"
