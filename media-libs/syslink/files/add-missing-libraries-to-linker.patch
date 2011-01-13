@@ -1,0 +1,52 @@
+From e483e75b27c7cb0bef5d11892963a115689845c8 Mon Sep 17 00:00:00 2001
+From: Daniel Diaz <ddiaz@ti.com>
+Date: Fri, 21 Jan 2011 17:03:14 -0600
+Subject: [PATCH] Add missing libraries to linker.
+
+An undefined symbol appears on run-time:
+  gst-launch-0.10: symbol lookup error: /usr/lib/libsysmgr.so.0:
+  undefined symbol: Notify_getConfig
+
+This is also shown when building with --as-needed during the
+linking stage.
+
+Signed-off-by: Daniel Diaz <ddiaz@ti.com>
+---
+ syslink/api/src/ipc/Makefile.am    |    1 +
+ syslink/api/src/notify/Makefile.am |    2 +-
+ syslink/api/src/sysmgr/Makefile.am |    2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/syslink/api/src/ipc/Makefile.am b/syslink/api/src/ipc/Makefile.am
+index ba698f1..173b334 100644
+--- a/syslink/api/src/ipc/Makefile.am
++++ b/syslink/api/src/ipc/Makefile.am
+@@ -59,3 +59,4 @@ libipc_la_LIBTOOLFLAGS = --tag=disable-static
+ libipc_la_CFLAGS = \
+ 	-I$(PROJROOT)/api/include
+ 
++libipc_la_LDFLAGS = -lipcutils
+diff --git a/syslink/api/src/notify/Makefile.am b/syslink/api/src/notify/Makefile.am
+index 5c80c78..659fd4f 100644
+--- a/syslink/api/src/notify/Makefile.am
++++ b/syslink/api/src/notify/Makefile.am
+@@ -47,5 +47,5 @@ libsyslinknotify_la_CFLAGS = \
+ 	-I$(PROJROOT)/api/include/linux
+ 
+ libsyslinknotify_la_LIBTOOLFLAGS = --tag=disable-static
+-libsyslinknotify_la_LDFLAGS = -version-info 0:0:0
++libsyslinknotify_la_LDFLAGS = -version-info 0:0:0 -lipc
+ libsyslinknotify_la_LIBADD = ../../src/utils/libipcutils.la
+diff --git a/syslink/api/src/sysmgr/Makefile.am b/syslink/api/src/sysmgr/Makefile.am
+index ea958b5..0c5dfbf 100644
+--- a/syslink/api/src/sysmgr/Makefile.am
++++ b/syslink/api/src/sysmgr/Makefile.am
+@@ -45,4 +45,4 @@ libsysmgr_la_CFLAGS = \
+ 	-I$(PROJROOT)/api/include
+ 
+ libsysmgr_la_LIBTOOLFLAGS = --tag=disable-static
+-libsysmgr_la_LDFLAGS = -version-info 0:0:0
++libsysmgr_la_LDFLAGS = -version-info 0:0:0 -lsyslinknotify -lipc -lprocmgr
+-- 
+1.7.3.4
+
