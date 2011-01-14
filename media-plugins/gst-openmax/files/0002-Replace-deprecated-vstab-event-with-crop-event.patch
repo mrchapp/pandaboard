@@ -1,0 +1,64 @@
+From 74e364b3a4f6d64d14a56c0b527cd1530e0df917 Mon Sep 17 00:00:00 2001
+From: Rob Clark <rob@ti.com>
+Date: Fri, 24 Dec 2010 21:01:06 -0600
+Subject: [PATCH] Replace deprecated vstab event with crop event.
+
+Signed-off-by: Daniel Diaz <ddiaz@ti.com>
+---
+ omx/gstomx_base_videodec.c |    5 +++--
+ omx/gstomx_base_videoenc.c |    4 ++--
+ omx/gstomx_camera.c        |    5 +++--
+ 3 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/omx/gstomx_base_videodec.c b/omx/gstomx_base_videodec.c
+index dd35c8c..299a947 100644
+--- a/omx/gstomx_base_videodec.c
++++ b/omx/gstomx_base_videodec.c
+@@ -77,8 +77,9 @@ push_buffer (GstOmxBaseFilter *omx_base, GstBuffer *buf)
+     if (n_offset)
+     {
+         gst_pad_push_event (omx_base->srcpad,
+-                gst_event_new_vstab (n_offset / self->rowstride, /* top */
+-                        n_offset % self->rowstride)); /* left */
++                gst_event_new_crop (n_offset / self->rowstride, /* top */
++                        n_offset % self->rowstride, /* left */
++                        -1, -1)); /* width/height: can be invalid for now */
+     }
+     return parent_class->push_buffer (omx_base, buf);
+ }
+diff --git a/omx/gstomx_base_videoenc.c b/omx/gstomx_base_videoenc.c
+index c550e5e..a83eb3d 100644
+--- a/omx/gstomx_base_videoenc.c
++++ b/omx/gstomx_base_videoenc.c
+@@ -303,10 +303,10 @@ pad_event (GstPad *pad, GstEvent *event)
+ 
+     switch (GST_EVENT_TYPE (event))
+     {
+-        case GST_EVENT_VSTAB:
++        case GST_EVENT_CROP:
+         {
+             gint top, left;
+-            gst_event_parse_vstab (event, &top, &left);
++            gst_event_parse_crop (event, &top, &left, NULL, NULL);
+ 
+             omx_base->in_port->n_offset = (self->rowstride * top) + left;
+ 
+diff --git a/omx/gstomx_camera.c b/omx/gstomx_camera.c
+index ca03de4..dc3130e 100644
+--- a/omx/gstomx_camera.c
++++ b/omx/gstomx_camera.c
+@@ -1509,8 +1509,9 @@ create (GstBaseSrc *gst_base,
+ 
+     if (n_offset)
+     {
+-        vstab_evt = gst_event_new_vstab (n_offset / self->rowstride, /* top */
+-                n_offset % self->rowstride); /* left */
++        vstab_evt = gst_event_new_crop (n_offset / self->rowstride, /* top */
++                n_offset % self->rowstride, /* left */
++                -1, -1); /* width/height: we can just give invalid for now */
+         gst_pad_push_event (GST_BASE_SRC (self)->srcpad,
+                 gst_event_ref (vstab_evt));
+     }
+-- 
+1.7.1
+
