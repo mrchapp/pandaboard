@@ -1,0 +1,27 @@
+From: Alejandro Gonzalez <a-gonzalez@ti.com>
+Date: Sat, 1 Jan 2000 00:03:26 +0000 (-0600)
+Subject: videoenc: Use shared buffers on output port.
+X-Git-Url: http://dev.omapzoom.org/?p=gstreamer%2Fgst-openmax.git;a=commitdiff_plain;h=0a0543a76ff2989d070693490b78625657a6c684
+
+videoenc: Use shared buffers on output port.
+
+Acked-by: Kiran Nataraju <knataraju@ti.com>
+Signed-off-by: Daniel Diaz <ddiaz@ti.com>
+---
+
+diff --git a/omx/gstomx_base_videoenc.c b/omx/gstomx_base_videoenc.c
+index bdbd59b..c550e5e 100644
+--- a/omx/gstomx_base_videoenc.c
++++ b/omx/gstomx_base_videoenc.c
+@@ -332,9 +332,9 @@ type_instance_init (GTypeInstance *instance,
+     omx_base->omx_setup = omx_setup;
+ 
+     omx_base->in_port->omx_allocate = FALSE;
+-    omx_base->out_port->omx_allocate = TRUE;
++    omx_base->out_port->omx_allocate = FALSE;
+     omx_base->in_port->share_buffer = TRUE;
+-    omx_base->out_port->share_buffer = FALSE;
++    omx_base->out_port->share_buffer = TRUE;
+ 
+     gst_pad_set_setcaps_function (omx_base->sinkpad, sink_setcaps);
+ 
