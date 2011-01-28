@@ -1,0 +1,27 @@
+From 97e06ec24aa68f94bdd75f02d7026490c6080e96 Mon Sep 17 00:00:00 2001
+From: Daniel Diaz <ddiaz@ti.com>
+Date: Fri, 28 Jan 2011 15:23:26 -0600
+Subject: [PATCH] v4l2sink: Define rotation if kernel header doesn't.
+
+Signed-off-by: Daniel Diaz <ddiaz@ti.com>
+---
+ sys/v4l2/gstv4l2sink.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/sys/v4l2/gstv4l2sink.c b/sys/v4l2/gstv4l2sink.c
+index ca6ae15..0438de9 100644
+--- a/sys/v4l2/gstv4l2sink.c
++++ b/sys/v4l2/gstv4l2sink.c
+@@ -102,6 +102,10 @@ GST_IMPLEMENT_V4L2_XOVERLAY_METHODS (GstV4l2Sink, gst_v4l2sink);
+ #endif
+ GST_IMPLEMENT_V4L2_VIDORIENT_METHODS (GstV4l2Sink, gst_v4l2sink);
+ 
++#ifndef V4L2_CID_ROTATE
++#  define V4L2_CID_ROTATE (V4L2_CID_BASE+34)
++#endif
++
+ static gboolean
+ gst_v4l2sink_iface_supported (GstImplementsInterface * iface, GType iface_type)
+ {
+-- 
+1.7.3.4
